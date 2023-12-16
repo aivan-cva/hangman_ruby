@@ -8,7 +8,7 @@ class Hangman
   end
 
   def load_game(name)
-    yaml_data = File.read("../save_files/#{name}.yaml")
+    yaml_data = File.read("../save_files/#{name}")
     loaded_data = YAML.load(yaml_data)
     puts "LOADED DATA:"
     puts loaded_data
@@ -32,8 +32,11 @@ class Hangman
     end
 
     if choice == 'Load Game'
-      p "Enter saved file name"
-      game_to_load = gets.chomp.strip
+      dir_path = '../save_files'
+      file_names = Dir.entries(dir_path).select { |file| File.file?(File.join(dir_path,file))}
+
+
+      game_to_load = prompt.select("Select a save file:", file_names)
       load_game(game_to_load)
     else
 
